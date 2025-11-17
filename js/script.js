@@ -6,7 +6,7 @@
 
 const list = document.getElementById("listaUsuarios");
 const genAge = () => {
-  return Math.floor(Math.random() * (60 - 18 + 1)) + 18; //genera una edad entre 60 y 18
+  return Math.floor(Math.random() * (65 - 18 + 1)) + 18; //genera una edad entre 0 a 48  + 18 +1
 };
 const getUsers = () => {
   let url = `https://jsonplaceholder.typicode.com/users`;
@@ -18,35 +18,45 @@ const getUsers = () => {
       return response.json();
     })
     .then((data) => {
-      const template = data.map(
-        (user) => `<li class="userInfo" >
-        <div class="user">
-            <div class="mainCard">
-                <div class="mainContent">
-                    <p><strong>Nombre:</strong>${user.name}</p>
-                    <p><strong>Edad:</strong>${genAge()}</p>
-                    <p><strong>Username:</strong>${user.username}</p>
-                    <p><strong>Telefono:</strong>${user.phone}</p>
-                    <p><strong>Email:</strong>${user.email}</p>
-                </div>
-                <img src="assets/img/${user.id}.jpeg" alt="imagen"></img>    
-            </div>
-            <div class="footerCard">
-                <p><strong>Compañia:</strong>${user.company.name}</p>
-                <p><strong>Direccion:</strong>${
-                  user.address.street +
-                  user.address.suite +
-                  user.address.zipcode
-                }</p>
-            </div>
-        </div>
-        
-        </li>
-        `
-      );
-      list.innerHTML = template.join(""); //para eliminar las comas;
+      const users = data
+        .map((user) => {
+          const { id, address } = user;
+          return {
+            ...user,
+            age: genAge(),
+            img: `assets/img/${id}.jpeg`,
+            addres: `${address.street + address.suite + address.zipcode}`,
+          };
+        })
+        .map((user) => {
+          const { address, name, age, username, img, phone, email, company } =
+            user;
+          const template = `
+          <li class="userInfo" >
+          <div class="user">
+              <div class="mainCard">
+                  <div class="mainContent">
+                      <p><strong>Nombre:</strong>${name}</p>
+                      <p><strong>Edad:</strong>${age}</p>
+                      <p><strong>Username:</strong>${username}</p>
+                      <p><strong>Telefono:</strong>${phone}</p>
+                      <p><strong>Email:</strong>${email}</p>
+                  </div>
+                  <img src="${img}" alt="imagen"></img>
+              </div>
+              <div class="footerCard">
+                  <p><strong>Compañia:</strong>${company.name}</p>
+                  <p><strong>Direccion:</strong>${address}</p>
+              </div>
+          </div>
+          </li>
+          `;
+          return template;
+        })
+        .join(""); //para eliminar las comas;
+      list.innerHTML = users; //users contiene todo el template
     });
 };
 
 getUsers();
-console.log(genAge());
+console.log(getUsers());
