@@ -25,7 +25,7 @@ const getUsers = () => {
             ...user,
             age: genAge(),
             img: `assets/img/${id}.jpeg`,
-            addres: `${address.street + address.suite + address.zipcode}`,
+            address: `${address.street + address.suite + address.zipcode}`,
           };
         })
         .map((user) => {
@@ -59,4 +59,3 @@ const getUsers = () => {
 };
 
 getUsers();
-console.log(getUsers());
