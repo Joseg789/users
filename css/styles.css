@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -10,4 +13,41 @@ h1 {
   color: #333;
 }
 
+#listaUsuarios {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  flex-wrap: wrap;
+  justify-content: center; /*para que me centre el contenido*/
+}
 
+.user {
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+  height: 290px;
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.user img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover; /*para q no se distorcione la imagen*/
+}
+.mainCard {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+.mainContent {
+  font-size: 14px;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  width: 75%;
+}
